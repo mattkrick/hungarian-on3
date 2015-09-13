@@ -8,4 +8,15 @@ Solves an assignment problem really fast. Benchmarked against other JS solutions
 - Additionally, it reduces the search space by removing rows that have no feasible column match.
 - For max speed, make sure your `BIG_M` is <= 2^30 (otherwise the optimizing compiler bails out because it has to rewrap the function in a double)
 
-##API
+##Installation
+`npm install hungarian-on3`
+
+##How to use
+```
+var hungarian = require('./hungarian-on3');
+var data = [[400, 150, 400],[400, 450, 600],[300, 225, 300]];
+var results = hungarian(data);
+//results: [[0, 1], [1, 0], [2, 2]]
+```
+##License
+MIT
