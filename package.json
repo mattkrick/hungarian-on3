@@ -2,9 +2,10 @@
   "name": "hungarian-on3",
   "version": "0.1.0",
   "description": "A hungarian algorithm that runs in O(n^3)",
-  "main": "hungarianOn3.js",
+  "main": "app/hungarianOn3.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node spec",
+    "docs": "jsdoc2md app/*.js > api.md"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,9 @@
   "keywords": [
     "Hungarian",
     "Munkres",
-    "Kuhn"
+    "Kuhn",
+    "assignment problem",
+    "bipartite"
   ],
   "author": "Matt Krick",
   "license": "MIT",
@@ -22,6 +25,10 @@
   },
   "homepage": "https://github.com/mattkrick/hungarian-on3#readme",
   "dependencies": {
-    "fast-bitset": "^0.1.0"
+    "fast-bitset": "^1.0.0"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "jsdoc-to-markdown": "^1.1.1"
   }
 }

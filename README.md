@@ -7,3 +7,5 @@ Solves an assignment problem really fast. Benchmarked against other JS solutions
 - The primary speed up comes from using the O(n^3) algorithm instead of the O(n^4) algorithm that you probably use when you solve by hand.
 - Additionally, it reduces the search space by removing rows that have no feasible column match.
 - For max speed, make sure your `BIG_M` is <= 2^30 (otherwise the optimizing compiler bails out because it has to rewrap the function in a double)
+
+##API

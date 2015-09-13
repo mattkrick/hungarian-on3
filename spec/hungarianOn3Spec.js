@@ -14,7 +14,6 @@ describe("Hungarian", function () {
       [400, 450, 600, 2],
       [300, 225, 300, 3]];
     var result = hungarian(data);
-    console.log(result);
     var correctAnswer = [[0, 1], [1, 3], [2, 2]];
     expect(result).toEqual(correctAnswer);
   });
@@ -24,7 +23,6 @@ describe("Hungarian", function () {
       [0, 0, 0],
       [0, 0, 0]];
     var result = hungarian(data);
-    console.log(result);
     var correctAnswer = [[0, 0], [1, 1], [2, 2]];
     expect(result).toEqual(correctAnswer);
   });

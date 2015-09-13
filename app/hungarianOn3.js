@@ -1,5 +1,11 @@
 var BitSet = require('fast-bitset');
 
+/**
+ * Solves the assignment problem (optimal matching for a directed bipartite graph)
+ * @param {Array} costMatrix an array of arrays where a[n][m] is the cost of assigning job m to worker n
+ * @param {boolean} [isProfit] solves the AP by maximizing the costs
+ * @returns {Array} An array of arrays. a[0] = worker index. a[1] = job index (or -1 if unassigned)
+ */
 module.exports = function (costMatrix, isProfit) {
   costMatrix = clone2d(costMatrix);
   var ap = new AP(costMatrix, isProfit);
