@@ -57,7 +57,7 @@ AP.prototype.execute = function () {
   this.computeInitialFeasibleSolution();
   this.greedyMatch();
   var w = this.jobByWorkerBS.ffz();
-  while (w < this.dim) {
+  while (w !== -1) {
     this.initializePhase(w);
     this.executePhase();
     w = this.jobByWorkerBS.ffz();
@@ -93,6 +93,7 @@ AP.prototype.initializePhase = function (w) {
   this.committedWorkers.set(w);
   workerCost = this.costMatrix[w];
   for (j = 0; j < this.dim; j++) {
+    if (!workerCost) debugger;
     this.minSlackValueByJob[j] = workerCost[j] - this.labelByWorker[w] - this.labelByJob[j];
     this.minSlackWorkerByJob[j] = w;
   }
@@ -106,7 +107,7 @@ AP.prototype.executePhase = function () {
       this.updateLabeling(mins.minSlackValue);
     }
     this.parentWorkerByCommittedJob[mins.minSlackJob] = mins.minSlackWorker;
-    if (this.workerByJobBS.get(mins.minSlackJob) === 0) {
+    if (!this.workerByJobBS.get(mins.minSlackJob)) {
       committedJob = mins.minSlackJob;
       parentWorker = this.parentWorkerByCommittedJob[committedJob];
       while (true) {
@@ -130,6 +131,7 @@ AP.prototype.executePhase = function () {
 AP.prototype.updateSlack = function (worker) {
   for (j = 0; j < this.dim; j++) {
     if (this.parentWorkerByCommittedJob[j] === -1) {
+      if (this.costMatrix[worker] === undefined) debugger; //TODO: caught this once, can't get it to repeat, possible bug
       var slack = this.costMatrix[worker][j] - this.labelByWorker[worker] - this.labelByJob[j];
       if (this.minSlackValueByJob[j] > slack) {
         this.minSlackValueByJob[j] = slack;
@@ -165,7 +167,7 @@ AP.prototype.greedyMatch = function () {
   var i, j;
   for (i = 0; i < this.dim; i++) {
     for (j = 0; j < this.dim; j++) {
-      if (this.jobByWorkerBS.get(i) === 0 && this.workerByJobBS.get(j) === 0 && this.costMatrix[i][j] === 0) {
+      if (!this.jobByWorkerBS.get(i) && !this.workerByJobBS.get(j) && this.costMatrix[i][j] === 0) {
         this.match(i, j);
         break;
       }
