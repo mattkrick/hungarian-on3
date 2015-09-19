@@ -26,4 +26,14 @@ describe("Hungarian", function () {
     var correctAnswer = [[0, 0], [1, 1], [2, 2]];
     expect(result).toEqual(correctAnswer);
   });
+
+  it('should return an empty array if the input array is infeasible', function () {
+    var BIG_M = Math.pow(2, 30);
+    var data = [[BIG_M],
+      [BIG_M+1],
+      [BIG_M*300]];
+    var result = hungarian(data);
+    var correctAnswer = [];
+    expect(result).toEqual(correctAnswer);
+  });
 });

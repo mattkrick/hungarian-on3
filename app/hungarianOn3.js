@@ -9,6 +9,9 @@ var BitSet = require('fast-bitset');
 module.exports = function (costMatrix, isProfit) {
   costMatrix = clone2d(costMatrix);
   var ap = new AP(costMatrix, isProfit);
+  if (ap.rows === 0 || ap.cols === 0) {
+    return [];
+  }
   return ap.execute();
 };
 
@@ -17,7 +20,7 @@ function AP(costMatrix, isProfit) {
   this.costMatrix = costMatrix;
   this.reduceSearchSpaceRows();
   this.rows = this.costMatrix.length;
-  this.cols = this.costMatrix[0].length;
+  this.cols = this.rows === 0 ? 0 : this.costMatrix[0].length;
   if (isProfit) {
     this.makeItProfit();
   }
@@ -257,22 +260,20 @@ function clone2d(mat) {
 }
 
 AP.prototype.makeSquare = function () {
-  var i, j, row, rows, cols;
-  rows = this.costMatrix.length;
-  cols = this.costMatrix[0].length;
-  if (rows === cols) return;
+  var i, j, row;
+  if (this.rows === this.cols) return;
 
-  if (rows > cols) {
-    for (i = 0; i < rows; i++) {
+  if (this.rows > this.cols) {
+    for (i = 0; i < this.rows; i++) {
       row = this.costMatrix[i];
-      for (j = cols; j < rows; j++) {
+      for (j = this.cols; j < this.rows; j++) {
         row[j] = 0;
       }
     }
-  } else if (rows < cols) {
-    for (i = rows; i < cols; i++) {
+  } else if (this.rows < this.cols) {
+    for (i = this.rows; i < this.cols; i++) {
       row = this.costMatrix[i] = [];
-      for (j = 0; j < cols; j++) {
+      for (j = 0; j < this.cols; j++) {
         row[j] = 0;
       }
     }
@@ -314,7 +315,7 @@ AP.prototype.removeUndefinedFromArr = function () {
   return newArr;
 };
 
-AP.prototype.makeItProfit = function() {
+AP.prototype.makeItProfit = function () {
   var biggestVal = 0;
   for (var i = 0; i < this.costMatrix.length; i++) {
     var row = this.costMatrix[i];
